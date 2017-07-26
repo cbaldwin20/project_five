@@ -1,0 +1,32 @@
+<!--prints errors from from entries, and prints the form entries-->
+
+<!--for the input fields-->
+{% macro render_field(field, id, type) %}
+    <div class="field">
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <div class="notification error">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+        {% if field.widget.input_type != 'hidden' %}
+        	{{ field(placeholder=field.label.text, id=id, type=type) }}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+
+<!--for the textarea fields-->
+{% macro render_field2(field, id, rows) %}
+    <div class="field">
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <div class="notification error">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+        {% if field.widget.input_type != 'hidden' %}
+        	{{ field(placeholder=field.label.text, id=id, rows=rows) }}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+

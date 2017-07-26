@@ -1,0 +1,34 @@
+<!--creates the edit entry page-->
+
+{% extends "layout.html" %}
+{% from 'macros.html' import render_field, render_field2 %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <div class="edit-entry">
+            <h2>Edit Entry</h2>
+            <form method="POST" action="" class="form">
+                {{ form.hidden_tag() }}
+                <label for="title"> Title</label>
+                {{ render_field(form.title, "title", "text") }}
+                <label for="date">Date</label>
+                {{ render_field(form.timestamp, "date", "date") }}
+                <label for="time-spent"> Time Spent</label>
+                {{ render_field(form.time_spent, "time-spent", "text") }}
+                <label for="what-i-learned">What I Learned</label>
+                {{ render_field2(form.content, "twhat-i-learned", "5") }}
+                <label for="resources-to-remember">Resources to Remember</label>
+                {{ render_field2(form.resources_to_remember, 
+                        "resources-to-remember", "5") }}
+                <label for="tags"> Tags</label>
+                {{ render_field(form.tags, "tags", "text") }}
+                <input type="submit" value="Publish Entry" class="button">
+                <a href="{{ url_for('index') }}" 
+                        class="button button-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

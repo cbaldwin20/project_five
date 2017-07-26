@@ -1,0 +1,76 @@
+<!--is the basic layout for all the files that inherit it-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>{% block title %}MyJournal{% endblock %}</title>
+        <link href="https://fonts.googleapis.com/css?family=Cousine:400" 
+              rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Work+Sans:600" 
+              rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" 
+              rel="stylesheet">
+        <link rel="stylesheet" href="static/css/normalize.css">
+        <link rel="stylesheet" href="/static/css/site.css">
+    </head>
+
+    <body>
+        <header>
+            <div class="row">
+
+              <div class="grid-33">
+                  <!-- Say Hi -->
+                  <h1>Hello{% if current_user.is_authenticated %} 
+                  {{ current_user.username }}{% endif %}!</h1>
+
+              </div>
+
+              <div class="grid-33">
+                  
+                  <!-- Log in/Log out -->
+                  {% if current_user.is_authenticated %}
+                  <!--creates the logout, login, register links-->
+                  <a href="{{ url_for('logout') }}" class="icon-power" 
+                        title="Log out">Log Out</a>
+                  {% else %}
+                  <a href="{{ url_for('login') }}" class="icon-power" 
+                        title="Log in">Log In</a>
+                  <a href="{{ url_for('register') }}" class="icon-profile" 
+                        title="Register">Register</a>
+                  {% endif %}
+                  
+              </div>
+
+            </div>
+            {% if current_user.is_authenticated %}
+            <!--creates the home page link, new entry link-->
+                <div class="container">
+                    <div class="site-header">
+                        <a class="logo" href="{{ url_for('index') }}">
+                              <i class="material-icons">library_books</i></a>
+                        <a class="button icon-right" 
+                            href="{{ url_for('post') }}"><span>New Entry</span> 
+                            <i class="material-icons">add</i></a>
+                    </div>
+                </div>
+            {% endif %}
+        </header>
+        <!--creates the space for the flash messages-->
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="notification {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+        <footer>
+            <div>
+                &copy; MyJournal
+            </div>
+        </footer>
+    </body>
+</html>

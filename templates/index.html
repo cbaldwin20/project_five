@@ -1,0 +1,32 @@
+<!--creates the home page-->
+
+{% extends "layout.html" %}
+
+{% block content %}
+{% if current_user.is_authenticated %}
+<section>
+<!--prints the title and date of the users previous entries.-->
+    <div class="container">
+        <div class="entry-list">
+        {% for post in stream %}
+            {% set slug = post.title.lower() %}
+            {% set slug = slug.replace(" ", "_") %}
+            <article>
+                <h2 class="heading"><a href="{{ url_for('view_post', 
+                 post_id=post.id, post_title=slug) }}">{{ post.title }}</a></h2>
+                <time data-time="{{ post.timestamp }}" 
+                datetime="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
+                {{ post.timestamp.strftime('%B %d, %Y') }}</time>
+                <p></p>
+                {% set my_tags = post.tags.split(",") %}
+                    {% for i in my_tags %}
+                        <a href="{{ url_for('tags', tagName=i) }}"
+                        class="margin-right">{{ i }}</a>
+                    {% endfor %}
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

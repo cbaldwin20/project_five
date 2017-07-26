@@ -1,0 +1,14 @@
+<!--creates the register page-->
+{% extends "layout.html" %}
+{% from 'macros.html' import render_field, render_field2 %}
+
+{% block content %}
+<form method="POST" action="" class="form margin">
+<!--goes through the fields in the register form and prints them-->
+    {{ form.hidden_tag() }}
+    {% for field in form %}
+        {{ render_field(field) }}
+    {% endfor %}
+    <button type="submit" id="submit" class="margin">Register!</button>
+</form>
+{% endblock %}

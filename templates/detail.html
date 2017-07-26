@@ -1,0 +1,65 @@
+<!--shows all of the contents of a specific post-->
+
+{% extends "layout.html" %}
+{% block content %}
+    {% for post in stream %}
+        <section>
+            <div class="container">
+                <div class="entry-list single">
+                    <article>
+                        <h1 class="heading">{{ post.title }}</h1>
+                        <time data-time="{{ post.timestamp }}" 
+                        datetime="{{ post.timestamp.
+                        strftime('%Y-%m-%d %H:%M:%S') }}"> {{ post.timestamp.
+                        strftime('%B %d, %Y') }}</time>
+                        <div class="entry">
+                            <h3>Time Spent: </h3>
+                            <p>{{ post.time_spent }}</p>
+                        </div>
+                        <div class="entry">
+                            <h3>What I Learned:</h3>
+                            <p>{{ post.content }}</p>
+                        </div>
+                        <div class="entry">
+                            <h3>Resources to Remember:</h3>
+                            <ul>
+                                {% set my_resource = post.
+                                    resources_to_remember.split(",") %}
+                                {% for i in my_resource %}
+                                <li><a href={{ i }} target="_blank">
+                                        {{ i }}
+                                </a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="entry">
+                            <h3>Tags: </h3>
+                            <p>
+                            {% set my_tags = post.tags.split(",") %}
+                                {% for i in my_tags %}
+                                    <a href="{{ url_for('tags', tagName=i) }}"
+                                        class="margin-right">
+                                    {{ i }}
+                                    </a>
+                                {% endfor %}
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <!--creates the url slugs-->
+            <div class="edit">
+                {% set slug = post.title.lower() %}
+                {% set slug = slug.replace(" ", "_") %}
+                <p><a href="{{ url_for('edit', post_id=post.id,
+                     post_title=slug) }}" class="view">Edit
+                </a></p>
+                <p><a href="{{ url_for('delete', post_id=post.id, yesOrNo='4',
+                 post_title=slug) }}" class="view">Delete
+                </a></p>
+            </div>
+        </section>
+{% endfor %}
+{% endblock %}
+
+        
